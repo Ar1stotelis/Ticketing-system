@@ -1,0 +1,92 @@
+#Needs a ticket member variable and the appropriate methods
+
+#Employ class
+class Employ:
+    name = "EmployName"
+    identifier = "EmployIdentifier"
+    phoneNumber = "EmployPhoneNumber"
+    email = "EmployEmail"
+    numberOfTickets = 0
+
+    def __init__(self, name, identifier, phoneNumber, email, numberOfTickets):
+        self.name = name
+        self.identifier = identifier
+        self.phoneNumber = phoneNumber
+        self.email = email
+        self.numberOfTickets = numberOfTickets
+
+    #Setters -----
+
+    def SetName(self, nameInput):
+        self.name = nameInput
+
+    def SetIdentifier(self, identifierInput):
+        self.identifier = identifierInput
+
+    def SetPhoneNumber(self, phoneNumberInput):
+        self.phoneNumber = phoneNumberInput
+
+    def SetEmail(self, emailInput):
+        self.email = emailInput
+
+    def SetNumberOfTickets(self, numberOfTicketsInput):
+        self.numberOfTickets = numberOfTicketsInput
+
+    #Getters -----
+
+    def GetName(self):
+        return self.name
+
+    def GetIdentifier(self):
+        return self.identifier
+
+    def GetPhoneNumber(self):
+        return self.phoneNumber
+
+    def GetEmail(self):
+        return self.email
+
+    def GetNumberOfTickets(self):
+        return self.numberOfTickets
+
+    def To_String(self):
+        return f"Name : {self.name}\nIdentifier : {self.identifier}\nPhone number : {self.phoneNumber}\nEmail : {self.email}\nNumber of Tickets : {self.numberOfTickets}\n"
+
+#class EmployInterface
+class EmployInterface:
+    employ = Employ("EmployName", "EmployIdentifier", "EmployPhoneNumber", "EmployEmail", 0)
+    
+    def SetName(self, nameInput):
+        self.employ.SetName(nameInput)
+        
+    def SetIdentifier(self, identifierInput):
+        self.employ.SetIdentifier(identifierInput)
+
+    def SetPhoneNumber(self, phoneNumberInput):
+        self.employ.SetPhoneNumber((phoneNumberInput))
+
+    def SetEmail(self, emailInput):
+        self.employ.SetEmail(emailInput)
+
+    def SetNumberOfTickets(self, numberOfTicketsInput):
+        self.employ.SetNumberOfTickets(numberOfTicketsInput)
+
+    #Getters -----
+
+    def GetName(self):
+        return self.employ.Getname()
+
+    def GetIdentifier(self):
+        return self.employ.GetIdentifier()
+
+    def GetPhoneNumber(self):
+        return self.employ.GetPhoneNumber()
+
+    def GetEmail(self):
+        return self.employ.GetEmail()
+
+    def GetNumberOfTickets(self):
+        return self.employ.GetNumberOfTickets()
+
+    def To_String(self):
+        return self.employ.To_String()
