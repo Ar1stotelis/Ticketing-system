@@ -25,8 +25,30 @@ class Heisenberg:
 
 
 
-#class for heisenberg 
+#class for heisenberg {HeisenbergInterface}
 class Manager:
+    Manager = Manager("EmployName", "ManagerSurname")
+    
+    def SetName(self, nameInput):
+        self.employ.SetName(nameInput)
+    
+    def SetSurname(self, SurnameInput):
+        self.Manager.SetSurname(surnameInput)
+
+    
+    
+    
+    
+    
+    def GetName(self):
+        return self.name
+
+    def GetSurname(self):
+        return self.surname
+
+
+
+    
     
 #MENU main programm
 
