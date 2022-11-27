@@ -1,10 +1,11 @@
+import random
 
 class ticket:
 
-    def __init__(self,ticketID,labels,description):
-        self.ticketID = ticketID
+    def __init__(self,labels,description):
+        self.ticketID = random.randint(1111,9999)
         self.labels = labels
-        self.description =description
+        self.description = description
 
     #Setters
     def setTicketID(self, ticketIDinput):
@@ -26,3 +27,21 @@ class ticket:
 
     def getDescription(self):
         print (self.description)
+class ticketFunctions:
+
+    def createTicket():
+        #user here is asked for the name of the file/ticket
+        ticketTitle = input("Please enter the ticket title: ")
+
+        userLabels = input("Please enter the labels for the new ticket: ")
+        ticketDescription = input("Describe the problem: ")
+        #Ticket object that will be put in a file
+        newTicket = ticket(userLabels, ticketDescription)
+
+        f = open(f"{ticketTitle}.txt", 'w')
+        f.write(newTicket.labels + "\n")
+        f.close()
+
+        f = open (f"{ticketTitle}.txt" , 'a')
+        f.write (newTicket.description)
+        f.close()
