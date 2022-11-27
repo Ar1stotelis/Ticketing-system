@@ -41,10 +41,10 @@ class Manager:
     
     
     def GetName(self):
-        return self.name
+        return self.Manager.Getname()
 
     def GetSurname(self):
-        return self.surname
+        return self.Manager.Surname()
 
 
 
@@ -76,4 +76,20 @@ While True:
             #call the selected function
         case "2":
             #embedded condition in order to identify if the user has opened a ticket before
+            while True:
+                print(' ===================================')
+                print('       STATUS OF YOUR TICKET \n')
+                print('(type the first number of your choice')
+                print('=====================================')
+
+                try:
+                    choice= input(' 1. MODIFY TICKET \n 2. DELETE TICKET \n ')
+                    choice= int(choice)
+                except:
+                    print(' \n \n error, give me a numeric input please. \n')
+
+                break
+
+
+            
             #menu to choose if the user wants to modify the ticket or delete it
