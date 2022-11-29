@@ -1,3 +1,6 @@
+from EmployClass import Employ
+
+
 #class EmployInterface
 class EmployInterface:
     employ = Employ("EmployName", "EmployIdentifier", "EmployPhoneNumber", "EmployEmail", 0)
