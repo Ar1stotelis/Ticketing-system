@@ -1,4 +1,6 @@
+import glob
 import random
+import os
 
 
 class Ticket:
@@ -9,45 +11,110 @@ class Ticket:
         self.description = description
 
     # Setters
-    def setTicketID(self, ticketIDinput):
-        self.ticketID = ticketIDinput
+    def set_ticket_id(self, ticket_id_input):
+        self.ticketID = ticket_id_input
 
-    def setLabels(self, labelsInput):
-        self.labels = labelsInput
+    def set_labels(self, labels_input):
+        self.labels = labels_input
 
-    def setDescription(self, descriptionInput):
-        self.description = descriptionInput
+    def set_description(self, description_input):
+        self.description = description_input
 
     # Getters
 
-    def getTicketID(self):
+    def get_ticket_id(self):
         print(self.ticketID)
 
-    def getLabels(self):
+    def get_labels(self):
         print(self.labels)
 
-    def getDescription(self):
+    def get_description(self):
         print(self.description)
 
 
-def createticket():
+# Method bellow checks the amount of tickets of an employee directory
+def check_ticket_amount(employee):
+    # Ticket path
+    dir_path = f"{os.getcwd()}\\{employee}"
+
+    count = 0
+    for path in os.listdir(dir_path):
+        if os.path.isfile(os.path.join(dir_path, path)):
+            count += 1
+    return count
+
+
+# The bellow method will count how many employee folders exist
+def count_of_employees():
+    i = 0
+
+    for root, dirs, files in os.walk(os.getcwd()):
+        i += root.count('Employee')
+    return i
+
+
+def creating_ticket_file(ticket_title, new_ticket, employee):
+    # This method here is going to be used by create ticket multiple time
+    # as such the code was put in this method to make the create_ticket method more readable
+    dir_path = f"{os.getcwd()}\\{employee}"
+
+    f = open(f"{dir_path}\\Ticket {ticket_title}.txt", 'w')
+    f.write(f"TicketID: {new_ticket.ticketID} \n")
+    f.close()
+
+    f = open(f"{dir_path}\\Ticket {ticket_title}.txt", 'a')
+    f.write(f"Description: {new_ticket.description} \n")
+    f.close()
+
+    f = open(f"{dir_path}\\Ticket {ticket_title}.txt", 'a')
+    f.write(new_ticket.description)
+    f.close()
+
+
+def create_ticket():
     # user here is asked for the name of the file/ticket
-    ticketTitle = input("Please enter the ticket title: ")
+    ticket_title = input("Please enter the ticket title: ")
 
-    userlabels = input("Please enter the labels for the new ticket: ")
-    ticketDescription = input("Describe the problem: ")
+    user_labels = input("Please enter the labels for the new ticket: ")
+    ticket_description = input("Describe the problem: ")
     # Ticket object that will be put in a file
-    newTicket = Ticket(userlabels, ticketDescription)
+    new_ticket = Ticket(user_labels, ticket_description)
+    # checking the amount of tickets each employee has
+    employee1tickets = check_ticket_amount("employee1")
+    employee2tickets = check_ticket_amount("employee2")
 
-    f = open(f"{ticketTitle}.txt", 'w')
-    f.write(newTicket.labels + "\n")
-    f.close()
+    if employee1tickets > employee2tickets:
+        creating_ticket_file(ticket_title, new_ticket, "Employee2")
+    elif employee2tickets > employee1tickets:
+        creating_ticket_file(ticket_title, new_ticket, "Employee1")
+    else:
+        creating_ticket_file(ticket_title, new_ticket, "Employee1")
 
-    f = open(f"{ticketTitle}.txt", 'a')
-    f.write(newTicket.description)
-    f.close()
+
+# Method that can be used to show all ticket text files within an employee directory
+def show_tickets(employee):
+    path_str = os.path.basename(" ".join(glob.glob(f"{employee}\\Ticket*.txt")))
+    tickets = os.path.basename(path_str)
+
+    print(tickets)
 
 
-class TicketFunctions:
+# This will go through all employee directories and return the file names
+def show_all_tickets():
+    for i in range(count_of_employees()):
+        show_tickets(f"Employee{i + 1}")
 
-    def showalltickets
+
+def display_ticket(ticket):
+    path_str = ""
+    for i in range(count_of_employees()):
+        path_str = " ".join(glob.glob(f"Employee{i + 1}\\{ticket}"))
+        break
+
+    print(path_str)
+
+    with open(path_str, "r") as f:
+        lines = f.readlines()
+        print(str(lines) + '\n')
+
+
