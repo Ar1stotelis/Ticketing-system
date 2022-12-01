@@ -1,4 +1,3 @@
 from enum import Enum
 
-class labels(Enum):
-    
+class Labels(Enum):

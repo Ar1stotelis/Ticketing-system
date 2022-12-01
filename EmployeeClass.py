@@ -1,7 +1,7 @@
 #Needs a ticket member variable and the appropriate methods
 
 #Employ class
-class Employ:
+class Employee:
     name = "EmployName"
     identifier = "EmployIdentifier"
     phoneNumber = "EmployPhoneNumber"

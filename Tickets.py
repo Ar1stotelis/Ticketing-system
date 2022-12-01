@@ -58,15 +58,11 @@ def creating_ticket_file(ticket_title, new_ticket, employee):
     # as such the code was put in this method to make the create_ticket method more readable
     dir_path = f"{os.getcwd()}\\{employee}"
 
-    f = open(f"{dir_path}\\Ticket {ticket_title}.txt", 'w')
+    f = open(f"{dir_path}\\Ticket {ticket_title}.txt", 'a')
     f.write(f"TicketID: {new_ticket.ticketID} \n")
-    f.close()
 
-    f = open(f"{dir_path}\\Ticket {ticket_title}.txt", 'a')
-    f.write(f"Description: {new_ticket.description} \n")
-    f.close()
+    f.write(f"Description: {new_ticket.labels} \n")
 
-    f = open(f"{dir_path}\\Ticket {ticket_title}.txt", 'a')
     f.write(new_ticket.description)
     f.close()
 
@@ -77,16 +73,16 @@ def create_ticket():
 
     user_labels = input("Please enter the labels for the new ticket: ")
     ticket_description = input("Describe the problem: ")
+
     # Ticket object that will be put in a file
     new_ticket = Ticket(user_labels, ticket_description)
+
     # checking the amount of tickets each employee has
     employee1tickets = check_ticket_amount("employee1")
     employee2tickets = check_ticket_amount("employee2")
 
     if employee1tickets > employee2tickets:
         creating_ticket_file(ticket_title, new_ticket, "Employee2")
-    elif employee2tickets > employee1tickets:
-        creating_ticket_file(ticket_title, new_ticket, "Employee1")
     else:
         creating_ticket_file(ticket_title, new_ticket, "Employee1")
 
@@ -116,5 +112,3 @@ def display_ticket(ticket):
     with open(path_str, "r") as f:
         lines = f.readlines()
         print(str(lines) + '\n')
-
-

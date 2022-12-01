@@ -1,9 +1,9 @@
-from EmployClass import Employ
+from EmployeeClass import Employee
 
 
-#class EmployInterface
-class EmployInterface:
-    employ = Employ("EmployName", "EmployIdentifier", "EmployPhoneNumber", "EmployEmail", 0)
+#class EmployeeInterface
+class EmployeeInterface:
+    employ = Employee("EmployName", "EmployIdentifier", "EmployPhoneNumber", "EmployEmail", 0)
     
     def SetName(self, nameInput):
         self.employ.SetName(nameInput)
