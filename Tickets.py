@@ -23,14 +23,40 @@ class Ticket:
     # Getters
 
     def get_ticket_id(self):
-        print(self.ticketID)
+        return self.ticketID
 
     def get_labels(self):
-        print(self.labels)
+        return self.labels
 
     def get_description(self):
-        print(self.description)
+        return self.description
 
+
+class TicketInterface:
+    ticket = Ticket("Null", "Description of the ticket")
+
+    # setters for interface
+    def set_ticket_id(self, ticket_id_input):
+        self.ticket.set_ticket_id(ticket_id_input)
+
+    def set_labels(self, labels_input):
+        self.ticket.set_labels(labels_input)
+
+    def set_description(self, description_input):
+        self.ticket.set_description(description_input)
+
+    # getters for interface
+    def get_ticket_id(self):
+        return self.ticket.get_ticket_id()
+
+    def get_labels(self):
+        self.ticket.get_labels()
+
+    def get_description(self):
+        self.ticket.set_description()
+
+
+# All bellow methods are methods that will be used to control the files and folders for the tickets
 
 # Method bellow checks the amount of tickets of an employee directory
 def check_ticket_amount(employee):
