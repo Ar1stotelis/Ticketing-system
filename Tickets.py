@@ -80,7 +80,7 @@ def count_of_employees():
 
 
 def creating_ticket_file(ticket_title, new_ticket, employee):
-    # This method here is going to be used by create ticket multiple time
+    # This method here is going to be used by create ticket multiple times from the create_ticket() method bellow
     # as such the code was put in this method to make the create_ticket method more readable
     dir_path = f"{os.getcwd()}\\{employee}"
 
@@ -92,7 +92,7 @@ def creating_ticket_file(ticket_title, new_ticket, employee):
     f.write(new_ticket.description)
     f.close()
 
-
+# Creates text file of ticket depending on which employee has more tickets
 def create_ticket():
     # user here is asked for the name of the file/ticket
     ticket_title = input("Please enter the ticket title: ")
@@ -126,7 +126,8 @@ def show_all_tickets():
     for i in range(count_of_employees()):
         show_tickets(f"Employee{i + 1}")
 
-
+# This methods will go through to the ticket and pring it out, you would just need the ticket name
+# The folder of employee1 and employee 2 need to also be in the working directory
 def display_ticket(ticket):
     path_str = ""
     for i in range(count_of_employees()):
