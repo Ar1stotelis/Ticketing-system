@@ -1,49 +1,40 @@
-#class for the manager
+# class for the manager
 class Heisenberg:
-    name='MangerName'
-    surname= 'ManagerSurname'
-    
+    name = 'MangerName'
+    surname = 'ManagerSurname'
 
     def __init__(self, name, surname):
-        self.name= name
-        self.surname= surname
-        
-# +++SETTERS+++
-    
-    def SetName(self, newName):
-        self.name = newName
+        self.name = name
+        self.surname = surname
 
-    def SetSurname(self, newSurname):
-        self.surname = newSurname   
+    # +++SETTERS+++
 
-# +++GETTERS+++
-    def GetName(self):
+    def set_name(self, new_name):
+        self.name = new_name
+
+    def set_surname(self, new_surname):
+        self.surname = new_surname
+
+    # +++GETTERS+++
+    def get_name(self):
         return self.name
 
-    def GetSurname(self):
+    def get_surname(self):
         return self.surname
 
 
-
-#class for heisenberg {HeisenbergInterface}
+# class for heisenberg {HeisenbergInterface}
 class Manager:
     Manager = Manager("EmployName", "ManagerSurname")
-    
-    def SetName(self, nameInput):
-        self.employ.SetName(nameInput)
-    
-    def SetSurname(self, SurnameInput):
-        self.Manager.SetSurname(surnameInput)
 
-    
+    def set_name(self, name_input):
+        self.employ.set_name(name_input)
 
-    
-    def GetName(self):
-        return self.Manager.Getname()
+    def set_surname(self, surname_input):
+        self.Manager.set_surname(surname_input)
 
-    def GetSurname(self):
-        return self.Manager.Surname()
+    def get_name(self):
+        return self.Manager.get_name()
 
-
-
-    
+    def get_surname(self):
+        return self.Manager.surname()
