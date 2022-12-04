@@ -1,4 +1,3 @@
-import glob
 import random
 import os
 
@@ -6,7 +5,7 @@ import os
 class Ticket:
 
     def __init__(self, labels, description):
-        self.ticketID = random.randint(1111, 9999)
+        self.ticketID = random.randint(100000, 999999)
         self.labels = labels
         self.description = description
 
@@ -53,7 +52,7 @@ class TicketInterface:
         self.ticket.get_labels()
 
     def get_description(self):
-        self.ticket.set_description()
+        self.ticket.get_description()
 
 
 # All bellow methods are methods that will be used to control the files and folders for the tickets
@@ -70,27 +69,62 @@ def check_ticket_amount(employee):
     return count
 
 
+# Method that can be used to show all ticket text files within an employee directory
+def show_tickets_by_employee(employee_num):
+
+    for x in os.listdir(f"{os.getcwd()}\\Employee{employee_num}"):
+        if x.endswith(".txt"):
+            print(x)
+
+
+
 # The bellow method will count how many employee folders exist
 def count_of_employees():
     i = 0
-
+    # counts directories with the name employee
     for root, dirs, files in os.walk(os.getcwd()):
         i += root.count('Employee')
     return i
 
 
+# This will go through all employee directories and return the file names
+def show_all_tickets():
+    for i in range(count_of_employees()):
+        show_tickets_by_employee(f"{i + 1}")
+
+
+# This methods will go through to the ticket and print it out, you would just need the ticket name
+# The folder of employee1 and employee 2 need to also be in the working directory
+def display_specific_ticket(ticket):
+
+    path = os.getcwd()
+    # Here this part will search through the files and find the file with the name that is stored in ticket
+    for root, directory, files in os.walk(path):
+        if f"{ticket}.txt" in files:
+            print(path)
+            with open(f"{root}\\{ticket}.txt", "r") as f:
+                lines = f.readlines()
+                # Here the readlines() method will return an array
+                # For better user readability the bellow format is used
+                print(f"{lines[0]}{lines[1]}{lines[2]}")
+
+
+
+# Ticket creation a storing inside of a file--------------------------------------------------------------
 def creating_ticket_file(ticket_title, new_ticket, employee):
-    # This method here is going to be used by create ticket multiple times from the create_ticket() method bellow
-    # as such the code was put in this method to make the create_ticket method more readable
+    # This method here is going to be used by the create_ticket() method bellow
+    # as such the code was put in this method to make the create_ticket() method more readable
+    # This method will take the ticket object and create a new text file and write the object in the file
     dir_path = f"{os.getcwd()}\\{employee}"
 
-    f = open(f"{dir_path}\\Ticket {ticket_title}.txt", 'a')
-    f.write(f"TicketID: {new_ticket.ticketID} \n")
+    f = open(f"{dir_path}\\{ticket_title}.txt", 'a')
+    f.write(f"TicketID: {new_ticket.ticketID}")
 
-    f.write(f"Description: {new_ticket.labels} \n")
+    f.write(f"Labels: {new_ticket.labels}")
 
-    f.write(new_ticket.description)
+    f.write(f"Description: {new_ticket.description}")
     f.close()
+
 
 # Creates text file of ticket depending on which employee has more tickets
 def create_ticket():
@@ -100,7 +134,7 @@ def create_ticket():
     user_labels = input("Please enter the labels for the new ticket: ")
     ticket_description = input("Describe the problem: ")
 
-    # Ticket object that will be put in a file
+    # Ticket object that will be written in a file
     new_ticket = Ticket(user_labels, ticket_description)
 
     # checking the amount of tickets each employee has
@@ -113,29 +147,5 @@ def create_ticket():
         creating_ticket_file(ticket_title, new_ticket, "Employee1")
 
 
-# Method that can be used to show all ticket text files within an employee directory
-def show_tickets(employee):
-    path_str = os.path.basename(" ".join(glob.glob(f"{employee}\\Ticket*.txt")))
-    tickets = os.path.basename(path_str)
-
-    print(tickets)
-
-
-# This will go through all employee directories and return the file names
-def show_all_tickets():
-    for i in range(count_of_employees()):
-        show_tickets(f"Employee{i + 1}")
-
-# This methods will go through to the ticket and pring it out, you would just need the ticket name
-# The folder of employee1 and employee 2 need to also be in the working directory
-def display_ticket(ticket):
-    path_str = ""
-    for i in range(count_of_employees()):
-        path_str = " ".join(glob.glob(f"Employee{i + 1}\\{ticket}"))
-        break
-
-    print(path_str)
-
-    with open(path_str, "r") as f:
-        lines = f.readlines()
-        print(str(lines) + '\n')
+# modifying the ticket -----------------------------------------------------
+def modify_ticket(ticket):
