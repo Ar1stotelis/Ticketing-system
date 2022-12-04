@@ -5,13 +5,13 @@ import os
 class Ticket:
 
     def __init__(self, labels, description):
-        self.ticketID = random.randint(100000, 999999)
+        self.ticket_ID = random.randint(100000, 999999)
         self.labels = labels
         self.description = description
 
     # Setters
     def set_ticket_id(self, ticket_id_input):
-        self.ticketID = ticket_id_input
+        self.ticket_ID = ticket_id_input
 
     def set_labels(self, labels_input):
         self.labels = labels_input
@@ -22,7 +22,7 @@ class Ticket:
     # Getters
 
     def get_ticket_id(self):
-        return self.ticketID
+        return self.ticket_ID
 
     def get_labels(self):
         return self.labels
@@ -123,41 +123,46 @@ def creating_ticket_file(ticket_title, new_ticket, employee):
     dir_path = f"{os.getcwd()}\\{employee}"
 
     f = open(f"{dir_path}\\{ticket_title}.txt", 'a')
-    f.write(f"TicketID: {new_ticket.ticketID}")
+    f.write(f"TicketID: {new_ticket.ticket_ID}\n")
 
-    f.write(f"Labels: {new_ticket.labels}")
+    f.write(f"Labels: {new_ticket.labels}\n")
 
-    f.write(f"Description: {new_ticket.description}")
-
+    f.write(f"Description: {new_ticket.description}\n")
     f.close()
+
 
 def check_if_ticket_exists(ticket_name):
     for i in range(count_of_employees()):
         if os.path.isfile(f"Employee{i + 1}\\{ticket_name}.txt"):
             return True
-            
+
+
 # Creates text file of ticket depending on which employee has more tickets
 def create_ticket():
     # user here is asked for the name of the file/ticket
     ticket_title = input("Please enter the ticket title: ")
-
-    user_labels = input("Please enter the labels for the new ticket: ")
-    ticket_description = input("Describe the problem: ")
-
-    # Ticket object that will be written in a file
-    new_ticket = Ticket(user_labels, ticket_description)
-
-    # checking the amount of tickets each employee has
-    employee1tickets = check_ticket_amount("employee1")
-    employee2tickets = check_ticket_amount("employee2")
-
-    if employee1tickets > employee2tickets:
-        creating_ticket_file(ticket_title, new_ticket, "Employee2")
+    if check_if_ticket_exists(ticket_title):
+        print("Name already exists, try again")
+    elif ticket_title == "" or ticket_title == " " * len(ticket_title):
+        print("Ticket title is required, try again")
     else:
-        creating_ticket_file(ticket_title, new_ticket, "Employee1")
+        user_labels = input("Please enter the labels for the new ticket: ")
+        ticket_description = input("Describe the problem: ")
+
+        # Ticket object that will be written in a file
+        new_ticket = Ticket(user_labels, ticket_description)
+        # Giving employee with the least tickets the new ticket
+        employee1tickets = check_ticket_amount("employee1")
+        employee2tickets = check_ticket_amount("employee2")
+
+        if employee1tickets > employee2tickets:
+            creating_ticket_file(ticket_title, new_ticket, "Employee2")
+        else:
+            creating_ticket_file(ticket_title, new_ticket, "Employee1")
 
 
 # modifying the ticket -----------------------------------------------------
+
 def modify_ticket(ticket):
     for root, directory, files in os.walk(os.getcwd()):
         if f"{ticket}.txt" in files:
@@ -169,29 +174,6 @@ def modify_ticket(ticket):
                 new_name = input("Please enter the new ticket name: ")
                 os.rename(f"{root}\\{ticket}.txt", f"{root}\\{new_name}.txt")
                 print("Ticket has been renamed")
-
-            elif user_input == 2:
-                new_labels = input("Please enter new ticket labels: ")
-                with open(f"{root}\\{ticket}.txt", "r+") as f:
-                    lines = f.readlines()
-                    lines[1] = f"Labels: {new_labels}"
-                    print("Labels have been changed")
-
-            elif user_input == 3:
-                new_desc = input("Please enter new ticket description: ")
-                with open(f"{root}\\{ticket}.txt", "w+") as f:
-                    lines = f.readlines()
-                    print (lines)
-                    new_ticket = TicketInterface(lines[1], lines[2])
-                    new_ticket.set_description(new_desc)
-
-                    f.write(new_ticket.get_ticket_id())
-                    f.write(new_ticket.get_labels())
-                    f.write(new_ticket.get_description())
-
-                    print("Description has been changed")
-            else:
-                print("Something went wrong, please try again")
 
 
 # deletes ticket that is inputted by the user using the ticket name----------------------------------------------
