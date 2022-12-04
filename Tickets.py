@@ -5,13 +5,13 @@ import os
 class Ticket:
 
     def __init__(self, labels, description):
-        self.ticketID = random.randint(100000, 999999)
+        self.ticket_ID = random.randint(100000, 999999)
         self.labels = labels
         self.description = description
 
     # Setters
     def set_ticket_id(self, ticket_id_input):
-        self.ticketID = ticket_id_input
+        self.ticket_ID = ticket_id_input
 
     def set_labels(self, labels_input):
         self.labels = labels_input
@@ -22,7 +22,7 @@ class Ticket:
     # Getters
 
     def get_ticket_id(self):
-        return self.ticketID
+        return self.ticket_ID
 
     def get_labels(self):
         return self.labels
@@ -143,10 +143,10 @@ def create_ticket():
     new_ticket = Ticket(user_labels, ticket_description)
 
     # checking the amount of tickets each employee has
-    employee1tickets = check_ticket_amount("employee1")
-    employee2tickets = check_ticket_amount("employee2")
+    employee1_tickets = check_ticket_amount("employee1")
+    employee2_tickets = check_ticket_amount("employee2")
 
-    if employee1tickets > employee2tickets:
+    if employee1_tickets > employee2_tickets:
         creating_ticket_file(ticket_title, new_ticket, "Employee2")
     else:
         creating_ticket_file(ticket_title, new_ticket, "Employee1")
