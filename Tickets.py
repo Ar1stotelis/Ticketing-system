@@ -131,6 +131,12 @@ def creating_ticket_file(ticket_title, new_ticket, employee):
     f.close()
 
 
+def check_if_ticket_exists(ticket_name):
+    for i in range(count_of_employees()):
+        if os.path.isfile(f"Employee{i + 1}\\{ticket_name}.txt"):
+            return True
+            
+            
 # Creates text file of ticket depending on which employee has more tickets
 def create_ticket():
     # user here is asked for the name of the file/ticket
