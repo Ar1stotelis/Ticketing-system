@@ -123,11 +123,11 @@ def creating_ticket_file(ticket_title, new_ticket, employee):
     dir_path = f"{os.getcwd()}\\{employee}"
 
     f = open(f"{dir_path}\\{ticket_title}.txt", 'a')
-    f.write(f"TicketID: {new_ticket.ticketID}")
+    f.write(f"TicketID: {new_ticket.ticket_ID}\n")
 
-    f.write(f"Labels: {new_ticket.labels}")
+    f.write(f"Labels: {new_ticket.labels}\n")
 
-    f.write(f"Description: {new_ticket.description}")
+    f.write(f"Description: {new_ticket.description}\n")
     f.close()
 
 
@@ -139,23 +139,30 @@ def check_if_ticket_exists(ticket_name):
             
 # Creates text file of ticket depending on which employee has more tickets
 def create_ticket():
+
     # user here is asked for the name of the file/ticket
     ticket_title = input("Please enter the ticket title: ")
-
-    user_labels = input("Please enter the labels for the new ticket: ")
-    ticket_description = input("Describe the problem: ")
-
-    # Ticket object that will be written in a file
-    new_ticket = Ticket(user_labels, ticket_description)
-
-    # checking the amount of tickets each employee has
-    employee1_tickets = check_ticket_amount("employee1")
-    employee2_tickets = check_ticket_amount("employee2")
-
-    if employee1_tickets > employee2_tickets:
-        creating_ticket_file(ticket_title, new_ticket, "Employee2")
+    if check_if_ticket_exists(ticket_title):
+        print("Name already exists, try again")
+    elif ticket_title == "" or ticket_title == " " * len(ticket_title):
+        print("Ticket title is required, try again")
     else:
-        creating_ticket_file(ticket_title, new_ticket, "Employee1")
+        user_labels = input("Please enter the labels for the new ticket: ")
+        ticket_description = input("Describe the problem: ")
+
+        # Ticket object that will be written in a file
+        new_ticket = Ticket(user_labels, ticket_description)
+
+        # checking the amount of tickets each employee has
+        employee1_tickets = check_ticket_amount("employee1")
+        employee2_tickets = check_ticket_amount("employee2")
+
+        if employee1_tickets > employee2_tickets:
+            creating_ticket_file(ticket_title, new_ticket, "Employee2")
+            print("Ticket created")
+        else:
+            creating_ticket_file(ticket_title, new_ticket, "Employee1")
+            print("Ticket created")
 
 
 # modifying the ticket -----------------------------------------------------
