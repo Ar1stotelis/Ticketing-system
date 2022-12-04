@@ -71,11 +71,13 @@ def check_ticket_amount(employee):
 
 # Method that can be used to show all ticket text files within an employee directory
 def show_tickets_by_employee(employee_num):
-
-    for x in os.listdir(f"{os.getcwd()}\\Employee{employee_num}"):
-        if x.endswith(".txt"):
-            print(x)
-
+    try:
+        for x in os.listdir(f"{os.getcwd()}\\Employee{employee_num}"):
+            if x.endswith(".txt"):
+                print(x)
+    except FileNotFoundError as error:
+        print(error)
+        print("That employee could not be found, please try again")
 
 
 # The bellow method will count how many employee folders exist
@@ -96,18 +98,21 @@ def show_all_tickets():
 # This methods will go through to the ticket and print it out, you would just need the ticket name
 # The folder of employee1 and employee 2 need to also be in the working directory
 def display_specific_ticket(ticket):
+    try:
+        path = os.getcwd()
+        # Here this part will search through the files and find the file with the name that is stored in ticket
+        for root, directory, files in os.walk(path):
+            if f"{ticket}.txt" in files:
+                print(path)
+                with open(f"{root}\\{ticket}.txt", "r") as f:
+                    lines = f.readlines()
+                    # Here the readlines() method will return an array
+                    # For better user readability the bellow format is used
+                    print(f"{lines[0]}{lines[1]}{lines[2]}")
 
-    path = os.getcwd()
-    # Here this part will search through the files and find the file with the name that is stored in ticket
-    for root, directory, files in os.walk(path):
-        if f"{ticket}.txt" in files:
-            print(path)
-            with open(f"{root}\\{ticket}.txt", "r") as f:
-                lines = f.readlines()
-                # Here the readlines() method will return an array
-                # For better user readability the bellow format is used
-                print(f"{lines[0]}{lines[1]}{lines[2]}")
-
+    except FileNotFoundError as error:
+        print(error)
+        print("The ticket could not be found, check the spelling and try again")
 
 
 # Ticket creation a storing inside of a file--------------------------------------------------------------
@@ -149,3 +154,27 @@ def create_ticket():
 
 # modifying the ticket -----------------------------------------------------
 def modify_ticket(ticket):
+    pass
+
+
+# deletes ticket that is inputted by the user using the ticket name----------------------------------------------
+def delete_ticket(ticket):
+    try:
+        path = os.getcwd()
+        # Here this part will search through the files and find the file with the name that is stored in ticket
+        for root, directory, files in os.walk(path):
+            if f"{ticket}.txt" in files:
+                user_choice = input(f"The ticket you will delete is{files}\n"
+                                    f"are you sure you want to delete this ticket? "
+                                    f"(input y for yes or n for no):")
+                if user_choice.lower() == 'y':
+                    os.remove(f"{root}\\{ticket}.txt")
+                    print("The ticket has been successfully removed")
+                elif user_choice.lower() == 'n':
+                    print("Ticket has not been removed")
+                else:
+                    print("Something went wrong, please try again")
+
+    except (FileNotFoundError, ValueError) as error:
+        print(error)
+        print("The ticket could not be found, check the spelling and try again")
