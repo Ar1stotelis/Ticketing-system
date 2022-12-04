@@ -1,9 +1,7 @@
-import Tickets.py
+from Tickets import *
 
 
 def print_ticket_menu():
-
-    
     print(
         f"\n============================\n"
         f"1: Create a new ticket\n"
@@ -55,3 +53,4 @@ def ticket_menu():
 
 if __name__ == "__main__":
     ticket_menu()
+
