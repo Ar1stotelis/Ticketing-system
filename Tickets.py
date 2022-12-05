@@ -1,12 +1,12 @@
 import random
-import os
+from labels import *
 
 
 class Ticket:
 
-    def __init__(self, labels, description):
+    def __init__(self, ticket_labels, description):
         self.ticket_ID = random.randint(100000, 999999)
-        self.labels = labels
+        self.labels = ticket_labels
         self.description = description
 
     # Setters
@@ -103,7 +103,7 @@ def display_specific_ticket(ticket):
         # Here this part will search through the files and find the file with the name that is stored in ticket
         for root, directory, files in os.walk(path):
             if f"{ticket}.txt" in files:
-                print(path)
+                # Printing ticket, as can be seen the ticket would require all lines to be filled
                 with open(f"{root}\\{ticket}.txt", "r") as f:
                     lines = f.readlines()
                     # Here the readlines() method will return an array
@@ -146,19 +146,37 @@ def create_ticket():
     elif ticket_title == "" or ticket_title == " " * len(ticket_title):
         print("Ticket title is required, try again")
     else:
-        user_labels = input("Please enter the labels for the new ticket: ")
+        user_labels = ""
+        labels_arr = load_data()
+        num = 1
+        # Printing labels for user to be able to see which number corresponds to which label
+        for i in labels_arr:
+            print(f"Enter {num} to put the label: {i}")
+            num += 1
+
+        user_input = int(input("Please input a number to select label or 0 to exit menu when finished: "))
+        while user_input != 0:
+            if user_input != 0:
+                user_labels += f"{labels_arr[user_input - 1]}, "
+                print(user_labels)
+            user_input = int(input("Please input a number to select label or 0 to exit menu when finished: "))
+
         ticket_description = input("Describe the problem: ")
-
-        # Ticket object that will be written in a file
-        new_ticket = Ticket(user_labels, ticket_description)
-        # Giving employee with the least tickets the new ticket
-        employee1tickets = check_ticket_amount("employee1")
-        employee2tickets = check_ticket_amount("employee2")
-
-        if employee1tickets > employee2tickets:
-            creating_ticket_file(ticket_title, new_ticket, "Employee2")
+        if ticket_description == "" or ticket_description == " "* len(ticket_description):
+            print("A description is required, please try again")
         else:
-            creating_ticket_file(ticket_title, new_ticket, "Employee1")
+            # This needs to be this far into the if statements as to make sure that a
+            # test file will not be created unless the fields are filled properly
+            # Ticket object that will be written in a file
+            new_ticket = Ticket(user_labels, ticket_description)
+            # Giving employee with the least tickets the new ticket
+            employee1tickets = check_ticket_amount("employee1")
+            employee2tickets = check_ticket_amount("employee2")
+
+            if employee1tickets > employee2tickets:
+                creating_ticket_file(ticket_title, new_ticket, "Employee2")
+            else:
+                creating_ticket_file(ticket_title, new_ticket, "Employee1")
 
 
 # modifying the ticket -----------------------------------------------------
@@ -208,6 +226,7 @@ def print_ticket_menu_manager():
         f"4: Show all tickets of one employee\n"
         f"5: Modify ticket\n"
         f"6: Delete ticket\n"
+        f"7: Label menu\n"
         f"0: close the menu"
         f"\n============================\n")
 
@@ -238,6 +257,14 @@ def ticket_menu_for_manager():
             elif user_input == 6:
                 ticket_name = input("Please enter the name of the ticket to be deleted: ")
                 delete_ticket(ticket_name)
+
+            elif user_input == 7:
+                if os.path.isfile("labels.pkl"):
+                    labels_arr = load_data()
+                    label_menu(labels_arr)
+                else:
+                    labels_arr = ["IT"]
+                    label_menu(labels_arr)
 
             else:
                 print("Non valid option")
